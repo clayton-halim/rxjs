@@ -28,9 +28,9 @@ import { EMPTY } from './empty.js';
  * @return An Observable that behaves the same as Observable returned by `observableFactory`, but
  * which - when completed, errored or unsubscribed - will also call `unsubscribe` on created resource object.
  */
-export function using<T extends ObservableInput<any>>(
-  resourceFactory: () => Unsubscribable | void,
-  observableFactory: (resource: Unsubscribable | void) => T | void
+export function using<T extends ObservableInput<any>, R extends Unsubscribable | void>(
+  resourceFactory: () => R,
+  observableFactory: (resource: R) => T | void
 ): Observable<ObservedValueOf<T>> {
   return new Observable<ObservedValueOf<T>>((subscriber) => {
     const resource = resourceFactory();
